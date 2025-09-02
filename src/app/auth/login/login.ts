@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthStore } from '../store/auth.store';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { catchError, of, tap } from 'rxjs';
 
@@ -27,6 +27,7 @@ export class Login {
   #authStore = inject(AuthStore);
   #router = inject(Router);
   #authService = inject(AuthService);
+  #route = inject(ActivatedRoute);
 
   loginForm: FormGroup<LoginForm>;
 
@@ -47,7 +48,8 @@ export class Login {
           .pipe(
             tap((user) => {
               this.#authStore.login(user);
-              this.#router.navigateByUrl('/');
+              const returnUrl = this.#route.snapshot.queryParams['returnUrl'] || '/';
+              this.#router.navigateByUrl(returnUrl);
             }),
             catchError((error) => {
               console.log('error', error);
