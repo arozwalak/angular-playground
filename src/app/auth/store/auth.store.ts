@@ -1,6 +1,7 @@
-import { signalStore, withState, withMethods, patchState } from '@ngrx/signals';
+import { signalStore, withState, withMethods, patchState, withComputed } from '@ngrx/signals';
 import * as fromAuth from './auth.slice';
 import { withLocalStorage, withTreeShakableDevTools } from '../../../helpers/store.features';
+import { computed } from '@angular/core';
 
 export const AuthStore = signalStore(
   {
@@ -15,6 +16,9 @@ export const AuthStore = signalStore(
     logout() {
       patchState(store, { user: undefined });
     },
+  })),
+  withComputed((store) => ({
+    isLoggedIn: computed(() => !!store.user()),
   })),
   withLocalStorage(fromAuth.authFeatureKey)
 );

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthStore } from '../../auth/store/auth.store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,5 +9,12 @@ import { Component } from '@angular/core';
   styleUrl: './toolbar.scss',
 })
 export class Toolbar {
-  logout() {}
+  #authStore = inject(AuthStore);
+  #router = inject(Router);
+  isLoggedIn = this.#authStore.isLoggedIn;
+  userName = this.#authStore.user()?.name;
+  logout() {
+    this.#authStore.logout();
+    this.#router.navigateByUrl('/login');
+  }
 }

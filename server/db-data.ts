@@ -2,6 +2,7 @@ export const USERS = {
   1: {
     id: 1,
     email: 'user@test.com',
+    name: 'Test User',
     password: 'test',
   },
 };

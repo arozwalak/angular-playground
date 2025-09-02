@@ -1,7 +1,9 @@
-<div>
+<div class="flex flex-row justify-between">
   <div></div>
   <div>
-    <span>Hello, User</span>
-    <button (click)="logout()">Logout</button>
+    @if(isLoggedIn()) {
+    <span>Hello, {{ userName }}</span>
+    <button class="bg-black text-white py-2 px-4 ml-4" (click)="logout()">Logout</button>
+    }
   </div>
 </div>
