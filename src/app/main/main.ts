@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { Toolbar } from '../components/toolbar/toolbar';
 
 @Component({
   selector: 'app-main',
-  imports: [],
+  imports: [Toolbar],
   templateUrl: './main.html',
-  styleUrl: './main.scss'
+  styleUrl: './main.scss',
 })
-export class Main {
-
-}
+export class Main {}

@@ -14,6 +14,12 @@ export const authGuard: CanActivateFn = (
   const authStore = inject(AuthStore);
   const router = inject(Router);
 
+  // On server, always allow (no localStorage)
+  if (typeof window === 'undefined') {
+    return true;
+  }
+
+  // Check if user is logged in (localStorage should be loaded by now)
   const user = authStore.user();
   if (!user) {
     router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
