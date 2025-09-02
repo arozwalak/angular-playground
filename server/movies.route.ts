@@ -42,6 +42,7 @@ export async function getMovies(req: Request, res: Response) {
         },
       });
     }
+    console.log(response.data.total_results, new Date().toTimeString());
 
     res.status(200).json(response.data);
   } catch (error) {

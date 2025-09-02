@@ -9,7 +9,8 @@ export const routes: Routes = [
     children: [
       {
         path: 'popular-movies',
-        loadComponent: () => import('./main/popular-movies/popular-movies').then((m) => m.PopularMovies),
+        loadComponent: () =>
+          import('./main/popular-movies/popular-movies').then((m) => m.PopularMovies),
       },
       {
         path: '',

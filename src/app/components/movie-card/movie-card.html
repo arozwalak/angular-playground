@@ -1,0 +1,17 @@
+@let _movie = movie();
+
+<div class="movie-card">
+  <div class="movie-poster">
+    @if (_movie.poster_path) {
+    <img [src]="'https://image.tmdb.org/t/p/w500' + _movie.poster_path" [alt]="_movie.title" />
+    } @if(!_movie.poster_path) {
+    <div class="no-poster">No Poster</div>
+    }
+  </div>
+  <div class="movie-info">
+    <h3>{{ _movie.title }}</h3>
+    <p class="release-date">{{ _movie.release_date | date : 'yyyy' }}</p>
+    <p class="rating">⭐ {{ _movie.vote_average | number : '1.1-1' }}</p>
+    <p class="overview">{{ _movie.overview | slice : 0 : 100 }}...</p>
+  </div>
+</div>

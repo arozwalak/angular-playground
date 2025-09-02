@@ -1,25 +1,12 @@
-@let moviesResponse = movies$ | async;
+@let movies = popularMovies();
 <div class="popular-movies">
-  <h2>Popular Movies</h2>
-
-  @if (moviesResponse) {
+  <h1 class="text-3xl">Popular Movies</h1>
+  @if (isLoading()) {
+  <p>Loading...</p>
+  } @else if (movies) {
   <div class="movies-grid">
-    @for (movie of moviesResponse.results; track movie.title) {
-    <div class="movie-card">
-      <div class="movie-poster">
-        @if (movie.poster_path) {
-        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title" />
-        } @if(!movie.poster_path) {
-        <div class="no-poster">No Poster</div>
-        }
-      </div>
-      <div class="movie-info">
-        <h3>{{ movie.title }}</h3>
-        <p class="release-date">{{ movie.release_date | date : 'yyyy' }}</p>
-        <p class="rating">⭐ {{ movie.vote_average | number : '1.1-1' }}</p>
-        <p class="overview">{{ movie.overview | slice : 0 : 100 }}...</p>
-      </div>
-    </div>
+    @for (movie of movies; track movie.title) {
+    <app-movie-card [movie]="movie"></app-movie-card>
     }
   </div>
   }

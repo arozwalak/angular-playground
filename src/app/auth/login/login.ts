@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,9 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthStore } from '../store/auth.store';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { catchError, of, tap } from 'rxjs';
+import { isPlatformServer } from '@angular/common';
 
 export interface LoginForm {
   email: FormControl<string>;
@@ -25,13 +23,13 @@ export interface LoginForm {
 export class Login {
   #fb = inject(FormBuilder);
   #authStore = inject(AuthStore);
-  #router = inject(Router);
-  #authService = inject(AuthService);
-  #route = inject(ActivatedRoute);
+  #platformId = inject(PLATFORM_ID);
 
   loginForm: FormGroup<LoginForm>;
+  isServer = isPlatformServer(this.#platformId);
 
   constructor() {
+    // Initialize form even on server to avoid hydration issues
     this.loginForm = this.#fb.nonNullable.group<LoginForm>({
       email: this.#fb.nonNullable.control('user@test.com', [Validators.required, Validators.email]),
       password: this.#fb.nonNullable.control('test', [Validators.required]),
@@ -39,27 +37,12 @@ export class Login {
   }
 
   login() {
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid && !this.isServer) {
       const { email, password } = this.loginForm.value;
 
       if (email && password) {
-        this.#authService
-          .login(email, password)
-          .pipe(
-            tap((user) => {
-              this.#authStore.login(user);
-              const returnUrl = this.#route.snapshot.queryParams['returnUrl'] || '/';
-              this.#router.navigateByUrl(returnUrl);
-            }),
-            catchError((error) => {
-              console.log('error', error);
-              alert('Login Failed');
-              return of(null);
-            })
-          )
-          .subscribe();
+        this.#authStore.login(email, password);
       }
     }
   }
-
 }
