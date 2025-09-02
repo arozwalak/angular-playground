@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config ./proxy.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:angular": "node dist/angular/server/server.mjs"
+    "serve:ssr:angular": "node dist/angular/server/server.mjs",
+    "server": "ts-node -P ./server/server.tsconfig.json ./server/server.ts"
   },
   "prettier": {
     "printWidth": 100,
@@ -31,15 +32,21 @@
     "@angular/platform-server": "^20.2.0",
     "@angular/router": "^20.2.0",
     "@angular/ssr": "^20.2.1",
+    "@ngrx/signals": "^20.0.1",
+    "@ngrx/store-devtools": "^20.0.1",
+    "@tailwindcss/postcss": "^4.1.12",
     "express": "^5.1.0",
+    "postcss": "^8.5.6",
     "rxjs": "~7.8.0",
+    "tailwindcss": "^4.1.12",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular-architects/ngrx-toolkit": "^20.3.0",
     "@angular/build": "^20.2.1",
     "@angular/cli": "^20.2.1",
     "@angular/compiler-cli": "^20.2.0",
-    "@types/express": "^5.0.1",
+    "@types/express": "^5.0.3",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.17.19",
     "jasmine-core": "~5.9.0",
@@ -48,6 +55,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.9.2"
   }
 }
