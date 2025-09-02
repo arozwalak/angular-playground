@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
+import * as path from 'path';
+
+// Load environment variables
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const TMDB_ACCESS_TOKEN = process.env.TMDB_ACCESS_TOKEN;

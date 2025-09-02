@@ -3,9 +3,6 @@ import { Application } from 'express';
 import { loginUser } from './auth.route';
 import { getMovies } from './movies.route';
 
-// Load environment variables
-require('dotenv').config();
-
 const bodyParser = require('body-parser');
 
 const app: Application = express();

@@ -1,0 +1,67 @@
+.popular-movies {
+  padding: 2rem;
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.movie-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.movie-poster {
+  aspect-ratio: 2/3;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .no-poster {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    color: #666;
+  }
+}
+
+.movie-info {
+  padding: 1rem;
+
+  h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .release-date,
+  .rating {
+    margin: 0.25rem 0;
+    font-size: 0.875rem;
+    color: #666;
+  }
+
+  .overview {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.875rem;
+    color: #444;
+    line-height: 1.4;
+  }
+}

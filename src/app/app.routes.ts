@@ -6,6 +6,17 @@ export const routes: Routes = [
     path: '',
     canActivate: [authGuard],
     loadComponent: () => import('./main/main').then((m) => m.Main),
+    children: [
+      {
+        path: 'popular-movies',
+        loadComponent: () => import('./main/popular-movies/popular-movies').then((m) => m.PopularMovies),
+      },
+      {
+        path: '',
+        redirectTo: 'popular-movies',
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: 'login',
