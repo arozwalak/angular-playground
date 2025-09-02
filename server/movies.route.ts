@@ -20,31 +20,42 @@ const tmdbApi = axios.create({
   },
 });
 
-export async function getMovies(req: Request, res: Response) {
+export async function getPopularMovies(req: Request, res: Response) {
+  try {
+    const { page = 1 } = req.query;
+
+    // Get popular movies
+    const response = await tmdbApi.get('/movie/popular', {
+      params: {
+        page,
+      },
+    });
+
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error('Error fetching movies from TMDB:', error);
+    res.status(500).json({ error: 'Failed to fetch movies' });
+  }
+}
+
+export async function searchMovie(req: Request, res: Response) {
   try {
     const { page = 1, query } = req.query;
 
-    let response;
     if (query) {
       // Search movies
-      response = await tmdbApi.get('/search/movie', {
+      const response = await tmdbApi.get('/search/movie', {
         params: {
           query,
           page,
           include_adult: false,
         },
       });
+      res.status(200).json(response.data);
     } else {
       // Get popular movies
-      response = await tmdbApi.get('/movie/popular', {
-        params: {
-          page,
-        },
-      });
+      res.status(400).json({ error: 'Query parameter is required for searching movies' });
     }
-    console.log(response.data.total_results, new Date().toTimeString());
-
-    res.status(200).json(response.data);
   } catch (error) {
     console.error('Error fetching movies from TMDB:', error);
     res.status(500).json({ error: 'Failed to fetch movies' });

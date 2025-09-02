@@ -8,7 +8,6 @@ export class MoviesService {
   #http = inject(HttpClient);
 
   getPopularMovies() {
-    console.log('fetching movies');
-    return this.#http.get<MoviesResponse>('/api/movies');
+    return this.#http.get<MoviesResponse>('/api/popular-movies');
   }
 }
